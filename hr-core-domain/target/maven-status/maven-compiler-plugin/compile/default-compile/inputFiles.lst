@@ -1,0 +1,16 @@
+C:\stage\var\workspace\dcl\dcl-350\2020\oct-05\hr-core-domain\src\main\java\com\example\hr\domain\Identity.java
+C:\stage\var\workspace\dcl\dcl-350\2020\oct-05\hr-core-domain\src\main\java\com\example\hr\domain\Fullname.java
+C:\stage\var\workspace\dcl\dcl-350\2020\oct-05\hr-core-domain\src\main\java\com\example\hr\events\EmployeeFiredEvent.java
+C:\stage\var\workspace\dcl\dcl-350\2020\oct-05\hr-core-domain\src\main\java\com\example\hr\domain\BirthYear.java
+C:\stage\var\workspace\dcl\dcl-350\2020\oct-05\hr-core-domain\src\main\java\com\example\hr\application\business\SimpleHrApplication.java
+C:\stage\var\workspace\dcl\dcl-350\2020\oct-05\hr-core-domain\src\main\java\com\example\hr\domain\Employee.java
+C:\stage\var\workspace\dcl\dcl-350\2020\oct-05\hr-core-domain\src\main\java\com\example\hr\domain\Photo.java
+C:\stage\var\workspace\dcl\dcl-350\2020\oct-05\hr-core-domain\src\main\java\com\example\hr\domain\Iban.java
+C:\stage\var\workspace\dcl\dcl-350\2020\oct-05\hr-core-domain\src\main\java\com\example\hr\infrastructure\EventPublisher.java
+C:\stage\var\workspace\dcl\dcl-350\2020\oct-05\hr-core-domain\src\main\java\com\example\hr\application\HrApplication.java
+C:\stage\var\workspace\dcl\dcl-350\2020\oct-05\hr-core-domain\src\main\java\com\example\hr\domain\Department.java
+C:\stage\var\workspace\dcl\dcl-350\2020\oct-05\hr-core-domain\src\main\java\com\example\hr\repository\EmployeeRepository.java
+C:\stage\var\workspace\dcl\dcl-350\2020\oct-05\hr-core-domain\src\main\java\com\example\hr\domain\MoneyCurrency.java
+C:\stage\var\workspace\dcl\dcl-350\2020\oct-05\hr-core-domain\src\main\java\com\example\hr\domain\Money.java
+C:\stage\var\workspace\dcl\dcl-350\2020\oct-05\hr-core-domain\src\main\java\com\example\hr\events\BusinessEvent.java
+C:\stage\var\workspace\dcl\dcl-350\2020\oct-05\hr-core-domain\src\main\java\com\example\hr\events\EmployeeHiredEvent.java
