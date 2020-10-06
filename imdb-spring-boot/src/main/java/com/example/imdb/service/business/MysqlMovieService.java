@@ -3,9 +3,7 @@ package com.example.imdb.service.business;
 import java.util.Collection;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnCloudPlatform;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Repository;
 
 import com.example.imdb.domain.Director;
@@ -13,8 +11,6 @@ import com.example.imdb.domain.Genre;
 import com.example.imdb.domain.Movie;
 import com.example.imdb.model.CriteriaBean;
 import com.example.imdb.service.MovieService;
-import com.example.imdb.service.PersistenceSource;
-import com.example.imdb.service.PersistenceSourceEnum;
 
 @Repository
 // @PersistenceSource(PersistenceSourceEnum.MYSQL)

@@ -9,6 +9,8 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import com.example.hr.domain.Department;
+import com.example.hr.domain.Employee;
+import com.example.hr.domain.Identity;
 
 @Entity
 @Table(name = "employees")
@@ -137,6 +139,32 @@ public class EmployeeEntity {
 	public String toString() {
 		return "EmployeeEntity [identity=" + identity + ", fullname=" + fullname + ", salary=" + salary + ", iban="
 				+ iban + ", birthYear=" + birthYear + ", fulltime=" + fulltime + ", department=" + department + "]";
+	}
+	
+	public Employee toEmployee() {
+		String []names = fullname.split("\\s+");
+		return new Employee.Builder(Identity.valueOf(this.identity))
+		             .fullname(names[0], names[1])
+		             .birthYear(this.birthYear)
+		             .photo(this.photo)
+		             .salary(this.salary)
+		             .iban(this.iban)
+		             .fulltime(this.fulltime)
+		             .department(this.department)
+		             .build();
+	}
+	
+	public static EmployeeEntity fromEmployee(Employee employee) {
+		String identity = employee.getIdentity().getValue();
+		String fullname = employee.getFullname().getFirst() + " " + employee.getFullname().getLast();
+		double salary = employee.getSalary().getValue();
+		String iban = employee.getIban().getValue();
+		int birthYear = employee.getBirthYear().getValue();
+		boolean fulltime = employee.isFulltime();
+		Department department = employee.getDepartment();
+		EmployeeEntity entity = new EmployeeEntity(identity, fullname, salary, iban, birthYear, fulltime, department);
+		entity.setPhoto(employee.getPhoto().getValues());
+		return entity;
 	}
 
 }

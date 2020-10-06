@@ -3,7 +3,6 @@ package com.example.hr.dto;
 import com.example.hr.domain.Department;
 import com.example.hr.domain.Employee;
 import com.example.hr.domain.Identity;
-import com.example.hr.orm.EmployeeEntity;
 
 public class HireEmployeeRequest {
 	private String identity;

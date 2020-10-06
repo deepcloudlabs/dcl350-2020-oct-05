@@ -10,8 +10,6 @@ import com.example.imdb.domain.Genre;
 import com.example.imdb.domain.Movie;
 import com.example.imdb.model.CriteriaBean;
 import com.example.imdb.service.MovieService;
-import com.example.imdb.service.PersistenceSource;
-import com.example.imdb.service.PersistenceSourceEnum;
 
 @Repository
 //@PersistenceSource(PersistenceSourceEnum.MONGO)
