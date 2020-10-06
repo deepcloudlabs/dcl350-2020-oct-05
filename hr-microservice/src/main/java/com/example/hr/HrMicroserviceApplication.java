@@ -2,7 +2,7 @@ package com.example.hr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+// -Dspring.profiles.active=test
 @SpringBootApplication
 public class HrMicroserviceApplication {
 
