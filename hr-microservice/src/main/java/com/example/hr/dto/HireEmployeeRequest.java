@@ -11,7 +11,7 @@ public class HireEmployeeRequest {
 	private double salary;
 	private String iban;
 	private int birthYear;
-	private byte[] photo;
+	private String photo;
 	private boolean fulltime;
 	private Department department;
 
@@ -55,11 +55,11 @@ public class HireEmployeeRequest {
 		this.birthYear = birthYear;
 	}
 
-	public byte[] getPhoto() {
+	public String getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(byte[] photo) {
+	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
 
@@ -86,11 +86,11 @@ public class HireEmployeeRequest {
 	}
 	
 	public Employee toEmployee() {
-		String []names = this.getFullname().split("\\w+");
+		String []names = this.getFullname().split("\\s+");
 		return new Employee.Builder(Identity.valueOf(this.getIdentity()))
 		             .fullname(names[0], names[1])
 		             .birthYear(this.getBirthYear())
-		             .photo(this.getPhoto())
+		             .photo(this.getPhoto().getBytes())
 		             .salary(this.getSalary())
 		             .iban(this.getIban())
 		             .fulltime(this.isFulltime())

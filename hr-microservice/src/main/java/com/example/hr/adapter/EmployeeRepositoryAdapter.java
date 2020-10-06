@@ -44,11 +44,12 @@ public class EmployeeRepositoryAdapter implements EmployeeRepository {
 		boolean fulltime = employee.isFulltime();
 		Department department = employee.getDepartment();
 		EmployeeEntity entity = new EmployeeEntity(identity, fullname, salary, iban, birthYear, fulltime, department);
+		entity.setPhoto(employee.getPhoto().getValues());
 		return entity;
 	}
 
 	private Employee mapEmployeeEntityToEmployee(EmployeeEntity entity) {
-		String []names = entity.getFullname().split("\\w+");
+		String []names = entity.getFullname().split("\\s+");
 		return new Employee.Builder(Identity.valueOf(entity.getIdentity()))
 		             .fullname(names[0], names[1])
 		             .birthYear(entity.getBirthYear())
