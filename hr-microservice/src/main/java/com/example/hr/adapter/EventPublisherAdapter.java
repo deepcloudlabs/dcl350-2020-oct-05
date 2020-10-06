@@ -10,8 +10,7 @@ public class EventPublisherAdapter implements EventPublisher {
 
 	@Override
 	public void publishEvent(BusinessEvent businessEvent) {
-		// TODO Auto-generated method stub
-
+		// TODO: implement event publisher using Kafka/RabbitMQ/ZeroMQ/Apache RocketMQ
 	}
 
 }
