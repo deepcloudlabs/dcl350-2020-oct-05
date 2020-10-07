@@ -1,12 +1,28 @@
 package com.example.crm.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import com.example.crm.validation.TcKimlikNo;
+
 public class CustomerRequest {
+	@TcKimlikNo
 	private String identity;
+	@NotNull
+	@Size(min = 5)
 	private String fullname;
+	@Size(min = 12)
 	private String homeAddress;
+	@Size(min = 12)
 	private String businessAddress;
+	@Email
 	private String email;
+	@Pattern(regexp = "^[0-9]{7,12}$")
 	private String sms;
+	@Max(2020)
 	private int birthYear;
 	private String photo;
 

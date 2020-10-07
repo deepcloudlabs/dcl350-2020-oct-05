@@ -6,8 +6,11 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 @Entity
 @Table(name = "customers")
+@DynamicUpdate
 public class Customer {
 	@Id
 	private String identity;
