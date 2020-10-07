@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,6 +50,7 @@ public class CrmController { // Adapter
     }
     
     @PutMapping("{identity}")
+    //@Transactional(rollbackFor = IllegalArgumentException.class)
     public CustomerResponse updateCustomer(@RequestBody CustomerRequest customerRequest,
     		@PathVariable String identity) {
     	return customerService.update(identity,customerRequest);
