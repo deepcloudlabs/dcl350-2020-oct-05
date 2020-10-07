@@ -5,24 +5,36 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicUpdate;
+
+import com.example.crm.validation.TcKimlikNo;
 
 @Entity
 @Table(name = "customers")
 @DynamicUpdate
 public class Customer {
 	@Id
+	@TcKimlikNo
 	private String identity;
 	@Column(name = "full_name")
 	private String fullname;
+	@Size(min=12)
 	@Column(name = "home_address")
 	private String homeAddress;
+	@Size(min=12)
 	@Column(name = "business_address")
 	private String businessAddress;
+	@Email
 	private String email;
+	@Pattern(regexp="^[0-9]{7,12}$")
 	private String sms;
 	@Column(name = "birth_year")
+	@Max(2020)
 	private int birthYear;
 	@Lob
 	@Column(columnDefinition = "longblob")
