@@ -61,7 +61,10 @@ public class SimpleCustomerService implements CustomerService {
 		if (cust.isEmpty())
 			throw new IllegalArgumentException("Cannot find customer to update");
 		var customer = cust.get();
-		customer.setPhoto(customerRequest.getPhoto().getBytes());
+		if (Objects.isNull(customerRequest.getPhoto()))
+			customer.setPhoto(null);
+		else	
+		   customer.setPhoto(customerRequest.getPhoto().getBytes());
 		customer.setHomeAddress(customerRequest.getHomeAddress());
 		customer.setBusinessAddress(customerRequest.getBusinessAddress());
 		customer.setSms(customerRequest.getSms());
