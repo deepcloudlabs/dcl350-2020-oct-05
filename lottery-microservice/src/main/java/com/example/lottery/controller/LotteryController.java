@@ -18,6 +18,7 @@ public class LotteryController {
 	@Autowired
 	private LotteryService lotteryService;
 
+	// http://localhost:8300/lottery/api/v1/numbers?n=10
 	@GetMapping(params= {"n"})
 	public List<List<Integer>> getLotteryNumbers(@RequestParam int n){
 		return lotteryService.draw(n);

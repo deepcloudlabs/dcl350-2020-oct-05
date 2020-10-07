@@ -5,6 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.example.lottery.service.LotteryService;
@@ -12,11 +13,17 @@ import com.example.lottery.service.LotteryService;
 @Service
 public class SimpleLotteryService implements LotteryService {
 
+	@Value("${lottery.max}")
+	private int lotteryMax;
+	
+	@Value("${lottery.size}")
+	private int lotterySize;
+	
 	@Override
 	public List<Integer> draw() {
-		return ThreadLocalRandom.current().ints(1, 50)
+		return ThreadLocalRandom.current().ints(1, lotteryMax)
 				   .distinct()
-				   .limit(6)
+				   .limit(lotterySize)
 				   .sorted()
 				   .boxed()
 				   .collect(Collectors.toList());
