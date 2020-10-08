@@ -2,14 +2,13 @@ package com.example.lottery.service;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.lottery.dto.Ticker;
 
-@Service
+//@Service
 public class LotteryServiceClient {
 	private static final String URL_LOTTERY = "http://localhost:8300/lottery/api/v1/numbers?n=10";
 	private static final String URL_BINANCE = "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT";
