@@ -28,7 +28,7 @@ public class LotteryServiceClient {
 		System.out.println(ticker);
 	}
 	
-	@Scheduled(fixedRate = 5_000)
+	@Scheduled(fixedRate = 500)
 	public void callAsyncBinanceRestApi() {
 		var rt = new AsyncRestTemplate();
 		rt.getForEntity(URL_BINANCE, Ticker.class)
