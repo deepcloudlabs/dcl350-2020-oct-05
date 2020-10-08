@@ -16,12 +16,13 @@ public class MarketApiHttpClient {
 				                 .uri(URI.create(URL))
 				                 .header("Accept", "application/json")
 				                 .build();
-		while (true) {
+		var start = System.currentTimeMillis();
+		for (var i = 0; i < 10; ++i) {
 			var response = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
 			System.out.println(response);
-			TimeUnit.SECONDS.sleep(1);
 		}
-
+		var stop = System.currentTimeMillis();
+		System.err.println("Duration: "+(stop-start)+" ms.");
 	}
 
 }
