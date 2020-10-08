@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
@@ -39,7 +40,9 @@ public class Customer {
 	@Lob
 	@Column(columnDefinition = "longblob")
 	private byte[] photo;
-
+	@Version
+	private int version;
+	
 	public Customer() {
 	}
 
@@ -105,6 +108,14 @@ public class Customer {
 
 	public void setPhoto(byte[] photo) {
 		this.photo = photo;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 	@Override

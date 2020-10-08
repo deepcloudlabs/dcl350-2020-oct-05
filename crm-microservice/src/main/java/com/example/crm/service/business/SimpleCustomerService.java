@@ -7,9 +7,12 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.persistence.LockModeType;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -48,6 +51,7 @@ public class SimpleCustomerService implements CustomerService {
 
 	@Override
 	@Transactional
+	@Lock(LockModeType.PESSIMISTIC_READ)
 	public CustomerResponse add(CustomerRequest customerRequest) {
 		Customer customer = modelMapper.map(customerRequest, Customer.class);
 		customerRepository.save(customer);
@@ -55,7 +59,7 @@ public class SimpleCustomerService implements CustomerService {
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
+	@Transactional(propagation = Propagation.NEVER, isolation = Isolation.READ_COMMITTED)
 	public CustomerResponse update(String identity, CustomerRequest customerRequest) {
 		var cust = customerRepository.findById(identity);
 		if (cust.isEmpty())

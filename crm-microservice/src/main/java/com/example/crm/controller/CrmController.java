@@ -40,6 +40,7 @@ public class CrmController { // Adapter
 	public CustomerResponse findCustomerByIdentity(
 			@PathVariable 
 			@TcKimlikNo String identity) {
+		System.err.println(customerService.getClass().getName());
 		return customerService.findById(identity);
 	}
 	
@@ -60,7 +61,6 @@ public class CrmController { // Adapter
     }
     
     @PutMapping("{identity}")
-    //@Transactional(rollbackFor = IllegalArgumentException.class)
     public CustomerResponse updateCustomer(
     		@RequestBody @Validated CustomerRequest customerRequest,
     		@PathVariable @TcKimlikNo String identity) {

@@ -5,7 +5,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.concurrent.TimeUnit;
 
 public class MarketApiHttpClient {
 	private static final String URL = "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT";

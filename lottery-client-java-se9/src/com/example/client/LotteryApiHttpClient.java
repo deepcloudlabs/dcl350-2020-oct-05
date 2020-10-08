@@ -5,7 +5,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.concurrent.TimeUnit;
 
 public class LotteryApiHttpClient {
 	private static final String URL = "http://localhost:8300/lottery/api/v1/numbers?n=10";
