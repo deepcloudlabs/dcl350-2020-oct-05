@@ -16,7 +16,7 @@ import com.netflix.loadbalancer.LoadBalancerBuilder;
 import com.netflix.loadbalancer.RoundRobinRule;
 import com.netflix.loadbalancer.Server;
 
-@Service
+//@Service
 public class LotteryConsumerService2 {
 	private static final String URL = "http://%s:%d/lottery/api/v1/numbers?n=10";
 
