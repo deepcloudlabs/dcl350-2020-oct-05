@@ -1,6 +1,8 @@
 package com.example.crm;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -12,12 +14,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.crm.dto.CustomerRequest;
 import com.example.crm.dto.CustomerResponse;
 import com.example.crm.service.CustomerService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK, classes = CrmMicroserviceApplication.class)
 @AutoConfigureMockMvc
@@ -26,6 +27,8 @@ class CrmMicroserviceApplicationTests {
     private MockMvc mvc;
     @MockBean
     private CustomerService customerService;
+    @Autowired
+    private ObjectMapper mapper;
     
 	@Test
 	void addOneCustomer_then_success() throws Throwable {
@@ -51,8 +54,9 @@ class CrmMicroserviceApplicationTests {
 		// 2. Call exercise method + 3. Verification
 		mvc.perform(
 				MockMvcRequestBuilders.post("/customers")
-				                      .content("")
+				                      .content(mapper.writeValueAsString(request))
 				                      .contentType(MediaType.APPLICATION_JSON)
+				                      .accept(MediaType.APPLICATION_JSON)
 		)
 		.andExpect(status().isOk())
 		.andExpect(jsonPath("identity", is("11111111110")));    
