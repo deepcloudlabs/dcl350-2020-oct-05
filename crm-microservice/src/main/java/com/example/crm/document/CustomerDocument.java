@@ -1,38 +1,38 @@
-package com.example.crm.dto;
+package com.example.crm.document;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import com.example.crm.validation.TcKimlikNo;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-public class CustomerRequest {
-	@TcKimlikNo
+@Document(collection = "customers")
+public class CustomerDocument {
+	@Id
 	private String identity;
-	@NotNull
-	@Size(min = 5)
-	@JsonProperty("ad_soyad")
+	@Field("full_name")
 	private String fullname;
 	@Size(min = 12)
-	@JsonProperty("ev_adresi")
+	@Field("home")
 	private String homeAddress;
 	@Size(min = 12)
-	@JsonProperty("is_adresi")
+	@Field("business")
 	private String businessAddress;
 	@Email
-	@JsonProperty("eposta")
+	@Indexed
 	private String email;
 	@Pattern(regexp = "^[0-9]{7,12}$")
+	@Indexed
 	private String sms;
 	@Max(2020)
 	private int birthYear;
 	private String photo;
-
-	public CustomerRequest() {
-	}
 
 	public String getIdentity() {
 		return identity;
@@ -96,6 +96,38 @@ public class CustomerRequest {
 
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((identity == null) ? 0 : identity.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CustomerDocument other = (CustomerDocument) obj;
+		if (identity == null) {
+			if (other.identity != null)
+				return false;
+		} else if (!identity.equals(other.identity))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "CustomerDocument [identity=" + identity + ", fullname=" + fullname + ", homeAddress=" + homeAddress
+				+ ", businessAddress=" + businessAddress + ", email=" + email + ", sms=" + sms + ", birthYear="
+				+ birthYear +  "]";
 	}
 
 }

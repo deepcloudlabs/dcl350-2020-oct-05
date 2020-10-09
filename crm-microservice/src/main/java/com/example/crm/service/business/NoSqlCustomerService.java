@@ -7,36 +7,30 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.persistence.LockModeType;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
+import com.example.crm.document.CustomerDocument;
 import com.example.crm.dto.CustomerRequest;
 import com.example.crm.dto.CustomerResponse;
 import com.example.crm.entity.Customer;
-import com.example.crm.repository.CustomerRepository;
+import com.example.crm.repository.CustomerDocumentRepository;
 import com.example.crm.service.CustomerService;
 
 @Service
-@ConditionalOnProperty(name = "database.type", havingValue = "mysql")
-public class SimpleCustomerService implements CustomerService {
-
+@ConditionalOnProperty(name = "database.type", havingValue = "mongodb")
+public class NoSqlCustomerService implements CustomerService {
 	@Autowired
-	private CustomerRepository customerRepository;
+	private CustomerDocumentRepository customerRepository;
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@Override
 	public CustomerResponse findById(String identity) {
-		Optional<Customer> cust = customerRepository.findById(identity);
+		Optional<CustomerDocument> cust = customerRepository.findById(identity);
 		if (cust.isEmpty())
 			throw new IllegalArgumentException("Cannot find customer");
 		return modelMapper.map(cust.get(), CustomerResponse.class);
@@ -44,24 +38,18 @@ public class SimpleCustomerService implements CustomerService {
 
 	@Override
 	public List<CustomerResponse> findAllCustomers(int page, int size) {
-		return customerRepository.findAll(PageRequest.of(page, size))
-				.getContent()
-				.stream()
-				.map( cust -> modelMapper.map(cust, CustomerResponse.class))
-				.collect(Collectors.toList());
+		return customerRepository.findAll(PageRequest.of(page, size)).getContent().stream()
+				.map(cust -> modelMapper.map(cust, CustomerResponse.class)).collect(Collectors.toList());
 	}
 
 	@Override
-	@Transactional
-	@Lock(LockModeType.PESSIMISTIC_READ)
 	public CustomerResponse add(CustomerRequest customerRequest) {
-		Customer customer = modelMapper.map(customerRequest, Customer.class);
+		CustomerDocument customer = modelMapper.map(customerRequest, CustomerDocument.class);
 		customerRepository.save(customer);
 		return modelMapper.map(customer, CustomerResponse.class);
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.NEVER, isolation = Isolation.READ_COMMITTED)
 	public CustomerResponse update(String identity, CustomerRequest customerRequest) {
 		var cust = customerRepository.findById(identity);
 		if (cust.isEmpty())
@@ -69,41 +57,39 @@ public class SimpleCustomerService implements CustomerService {
 		var customer = cust.get();
 		if (Objects.isNull(customerRequest.getPhoto()))
 			customer.setPhoto(null);
-		else	
-		   customer.setPhoto(customerRequest.getPhoto().getBytes());
+		else
+			customer.setPhoto(customerRequest.getPhoto());
 		customer.setHomeAddress(customerRequest.getHomeAddress());
 		customer.setBusinessAddress(customerRequest.getBusinessAddress());
 		customer.setSms(customerRequest.getSms());
-		// customerRepository.save(customer); // JPA -> Bulk Operations
-		// customerRepository.flush();
+		customerRepository.save(customer);
 		return modelMapper.map(customer, CustomerResponse.class);
 	}
 
 	@Override
-	@Transactional
 	public CustomerResponse update(String identity, Map<String, Object> customerPatchRequest) {
 		var cust = customerRepository.findById(identity);
 		if (cust.isEmpty())
 			throw new IllegalArgumentException("Cannot find customer to update");
 		var customer = cust.get();
-        for (var entry : customerPatchRequest.entrySet()) {
-        	Field field;
+		for (var entry : customerPatchRequest.entrySet()) {
+			Field field;
 			try {
 				field = Customer.class.getDeclaredField(entry.getKey());
 				if (Objects.nonNull(field)) {
-				   	field.setAccessible(true);
-				   	field.set(customer, entry.getValue());
-				   	field.setAccessible(false);
+					field.setAccessible(true);
+					field.set(customer, entry.getValue());
+					field.setAccessible(false);
 				}
 			} catch (Exception e) {
-				System.err.println("Reason: "+e.getMessage());
+				System.err.println("Reason: " + e.getMessage());
 			}
-        }
+		}
+		customerRepository.save(customer);
 		return modelMapper.map(customer, CustomerResponse.class);
 	}
 
 	@Override
-	@Transactional
 	public CustomerResponse deleteById(String identity) {
 		var cust = customerRepository.findById(identity);
 		if (cust.isEmpty())
